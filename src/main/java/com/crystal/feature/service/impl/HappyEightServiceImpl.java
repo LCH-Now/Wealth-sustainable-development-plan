@@ -7,6 +7,7 @@ import com.crystal.feature.model.vo.HappyEightNumberNoAppearsVo;
 import com.crystal.feature.model.vo.ResultVo;
 import com.crystal.feature.service.HappyEightService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
  * @author CHUNHAO LIU
  * 快乐8实现类
  */
+@Service
 public class HappyEightServiceImpl implements HappyEightService {
 
     @Autowired
