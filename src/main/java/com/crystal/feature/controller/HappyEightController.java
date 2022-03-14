@@ -1,17 +1,17 @@
 package com.crystal.feature.controller;
 
+import com.crystal.feature.model.dto.HappyEightInsertDto;
 import com.crystal.feature.model.vo.HappyEightNumberNoAppearsVo;
 import com.crystal.feature.model.vo.HappyEightNumberFrequencyVo;
+import com.crystal.feature.model.vo.HappyEightQueryVo;
 import com.crystal.feature.model.vo.ResultVo;
 import com.crystal.feature.service.HappyEightService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author CHUNHAO LIU
@@ -27,40 +27,81 @@ public class HappyEightController {
 
 
     /**
-     * 查询出最近4场 8场等出现的概率，理论上出现的概率为0.25;
-     * @param time
+     * 查询历史彩票数据
+     *
      * @return
      */
-    @RequestMapping(value = "queryNumberFrequency",method = RequestMethod.GET)
-    public ResultVo<List<HappyEightNumberFrequencyVo>> queryNumberFrequency(@RequestParam(value = "time" ,required = false) String time) {
+    @RequestMapping(value = "query", method = RequestMethod.GET)
+    public ResultVo<Map<String, HappyEightQueryVo>> query() {
 
-        ResultVo<List<HappyEightNumberFrequencyVo>> vo=new ResultVo<>();
-        try{
-            //vo=happyEightService.queryNumberNoAppearsListByStage(stage);
-        }catch (Exception e){
+        ResultVo<Map<String, HappyEightQueryVo>> vo = new ResultVo<>();
+        try {
+            //vo = happyEightService.save();
+        } catch (Exception e) {
             e.printStackTrace();
+            vo.fail();
         }
 
         return vo;
     }
 
 
+    /**
+     * 保存或者修改彩票中奖号码数据。
+     *
+     * @param dto
+     * @return
+     */
+    @RequestMapping(value = "save", method = RequestMethod.POST)
+    public ResultVo<String> save(@RequestBody HappyEightInsertDto dto) {
 
+        ResultVo<String> vo = new ResultVo<>();
+        try {
+            vo = happyEightService.save(dto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            vo.fail();
+        }
+
+        return vo;
+    }
+
+    /**
+     * 查询出最近4场 8场等出现的概率，理论上出现的概率为0.25;
+     *
+     * @param time
+     * @return
+     */
+    @RequestMapping(value = "queryNumberFrequency", method = RequestMethod.GET)
+    public ResultVo<List<HappyEightNumberFrequencyVo>> queryNumberFrequency(@RequestParam(value = "time", required = false) String time) {
+
+        ResultVo<List<HappyEightNumberFrequencyVo>> vo = new ResultVo<>();
+        try {
+            vo = happyEightService.queryNumberFrequency(time);
+        } catch (Exception e) {
+            e.printStackTrace();
+            vo.fail();
+        }
+
+        return vo;
+    }
 
 
     /**
      * 倒序查出最近几期没有出现的号码
+     *
      * @param stage 场次
      * @return
      */
-    @RequestMapping(value = "queryNumberNoAppearsListByStage",method = RequestMethod.GET)
-    public ResultVo<HappyEightNumberNoAppearsVo> queryNumberNoAppearsListByStage(@RequestParam(value = "stage" ,required = false)  int stage) {
+    @RequestMapping(value = "queryNumberNoAppearsListByStage", method = RequestMethod.GET)
+    public ResultVo<HappyEightNumberNoAppearsVo> queryNumberNoAppearsListByStage(@RequestParam(value = "stage", required = false) int stage) {
 
-        ResultVo<HappyEightNumberNoAppearsVo> vo=new ResultVo<>();
-        try{
-            vo=happyEightService.queryNumberNoAppearsListByStage(stage);
-        }catch (Exception e){
+        ResultVo<HappyEightNumberNoAppearsVo> vo = new ResultVo<>();
+        try {
+            vo = happyEightService.queryNumberNoAppearsListByStage(stage);
+        } catch (Exception e) {
             e.printStackTrace();
+            vo.fail();
         }
 
         return vo;

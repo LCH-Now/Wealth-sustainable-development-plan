@@ -17,7 +17,7 @@ public class HappyEightNumberFrequencyVo {
     /**
      * 最近4场出现的次数
      */
-    private String lastFour;
+    private Integer lastFour;
 
     /**
      * 最近4场出现的概率
@@ -27,7 +27,7 @@ public class HappyEightNumberFrequencyVo {
     /**
      * 最近8场出现的次数
      */
-    private String lastEight;
+    private Integer lastEight;
 
     /**
      * 最近8场出现的概率
@@ -37,7 +37,7 @@ public class HappyEightNumberFrequencyVo {
     /**
      * 最近12场出现的次数
      */
-    private String lastTwelve;
+    private Integer lastTwelve;
 
     /**
      * 最近12场出现的概率
@@ -47,7 +47,7 @@ public class HappyEightNumberFrequencyVo {
     /**
      * 最近16场出现的次数
      */
-    private String lastSixteen;
+    private Integer lastSixteen;
 
     /**
      * 最近16场出现的概率
@@ -57,11 +57,14 @@ public class HappyEightNumberFrequencyVo {
     /**
      * 总次数
      */
-    private String totalTime;
+    private Integer totalTime;
 
     /**
      * 总概率
      */
     private String totalTimeFrequency;
 
+    public HappyEightNumberFrequencyVo(String number) {
+        Number = number;
+    }
 }
