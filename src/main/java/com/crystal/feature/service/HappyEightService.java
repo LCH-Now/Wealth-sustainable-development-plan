@@ -1,12 +1,12 @@
 package com.crystal.feature.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.crystal.feature.model.dto.HappyEightInsertDto;
+import com.crystal.feature.model.dto.PageDto;
 import com.crystal.feature.model.vo.HappyEightNumberFrequencyVo;
 import com.crystal.feature.model.vo.HappyEightNumberNoAppearsVo;
 import com.crystal.feature.model.vo.HappyEightQueryVo;
 import com.crystal.feature.model.vo.ResultVo;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
@@ -20,10 +20,10 @@ public interface HappyEightService {
 
     /**
      * 查询历史中奖信息
-     *
+     * @param dto 查询分页信息
      * @return
      */
-    ResultVo<Map<String, HappyEightQueryVo>> query();
+    ResultVo<IPage<Map<String,HappyEightQueryVo>>> query(PageDto dto);
 
     /**
      * 保存中奖日期以及中奖号码
@@ -49,4 +49,5 @@ public interface HappyEightService {
      * @return
      */
     ResultVo<List<HappyEightNumberFrequencyVo>> queryNumberFrequency(String time);
+
 }

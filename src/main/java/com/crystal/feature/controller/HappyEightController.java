@@ -1,12 +1,14 @@
 package com.crystal.feature.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.crystal.feature.model.dto.HappyEightInsertDto;
+import com.crystal.feature.model.dto.PageDto;
+import com.crystal.feature.model.entity.HappyEightEntity;
 import com.crystal.feature.model.vo.HappyEightNumberNoAppearsVo;
 import com.crystal.feature.model.vo.HappyEightNumberFrequencyVo;
 import com.crystal.feature.model.vo.HappyEightQueryVo;
 import com.crystal.feature.model.vo.ResultVo;
 import com.crystal.feature.service.HappyEightService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,11 +34,12 @@ public class HappyEightController {
      * @return
      */
     @RequestMapping(value = "query", method = RequestMethod.GET)
-    public ResultVo<Map<String, HappyEightQueryVo>> query() {
+    public ResultVo<IPage<Map<String, HappyEightQueryVo>>> query(@RequestBody PageDto dto) {
 
-        ResultVo<Map<String, HappyEightQueryVo>> vo = new ResultVo<>();
+        ResultVo<IPage<Map<String, HappyEightQueryVo>>> vo = new ResultVo<>();
         try {
-            //vo = happyEightService.save();
+
+            vo = happyEightService.query(dto);
         } catch (Exception e) {
             e.printStackTrace();
             vo.fail();

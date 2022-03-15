@@ -2,16 +2,20 @@ package com.crystal.feature.service.impl;
 
 import com.alibaba.nacos.common.utils.UuidUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.crystal.feature.common.constant.CommonCodeConstant;
 import com.crystal.feature.common.constant.CommonMessageConstant;
 import com.crystal.feature.mapper.HappyEightMapper;
 import com.crystal.feature.model.dto.HappyEightInsertDto;
+import com.crystal.feature.model.dto.PageDto;
 import com.crystal.feature.model.entity.HappyEightEntity;
 import com.crystal.feature.model.vo.HappyEightNumberFrequencyVo;
 import com.crystal.feature.model.vo.HappyEightNumberNoAppearsVo;
 import com.crystal.feature.model.vo.HappyEightQueryVo;
 import com.crystal.feature.model.vo.ResultVo;
 import com.crystal.feature.service.HappyEightService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,20 +32,44 @@ public class HappyEightServiceImpl implements HappyEightService {
     private HappyEightMapper happyEightMapper;
 
     @Override
-    public ResultVo<Map<String, HappyEightQueryVo>> query() {
-        //暂时行查询100条历史数据
-        List<HappyEightEntity> happyEightEntity= happyEightMapper.selectList(new QueryWrapper<HappyEightEntity>().orderByDesc("stage").last("limit 100"));
-        return null;
+    public ResultVo<IPage<Map<String, HappyEightQueryVo>>> query(PageDto dto) {
+
+
+        IPage<HappyEightEntity> happyEightEntity = happyEightMapper.selectPage(new Page<>(dto.getPage(), dto.getSize()), new QueryWrapper<HappyEightEntity>().orderByDesc("stage"));
+
+        //对查询出来的数据进行处理
+        List<HappyEightEntity> happyEightEntityList = happyEightEntity.getRecords();
+
+        if (null == happyEightEntityList || happyEightEntityList.size() == 0) {
+            //如果集合为空则直接跳出
+            return new ResultVo<IPage<Map<String, HappyEightQueryVo>>>().sucess();
+        }
+
+        //将开奖日期与中奖号码进行KEY-VALUE排列。
+        List<Map<String, HappyEightQueryVo>> happyEightQueryList = new ArrayList<>();
+        Map<String, HappyEightQueryVo> happyEightQueryMap = new HashMap<>();
+        //如果不为空则对集合进行处理，将字段合并成一个输出
+        for (HappyEightEntity entity : happyEightEntityList) {
+
+            HappyEightQueryVo queryVo = new HappyEightQueryVo().fillAttribute(entity.getNumber());
+            happyEightQueryMap.put(entity.getLotteryDate(), queryVo);
+
+        }
+        Page<Map<String, HappyEightQueryVo>> pageVo = new Page<>();
+        BeanUtils.copyProperties(happyEightEntityList, pageVo);
+        happyEightQueryList.add(happyEightQueryMap);
+        pageVo.setRecords(happyEightQueryList);
+        return new ResultVo<IPage<Map<String, HappyEightQueryVo>>>().sucess(pageVo);
     }
 
     @Override
     public ResultVo<String> save(HappyEightInsertDto dto) {
 
         //先查询一下当前的数据库中是否有对应的记录如果有则表示修改
-        String lotteryDate=dto.getLotteryDate();
+        String lotteryDate = dto.getLotteryDate();
 
-        HappyEightEntity happyEightEntity= happyEightMapper.selectOne(new QueryWrapper<HappyEightEntity>().eq("lottery_date",lotteryDate));
-        if(null==happyEightEntity){
+        HappyEightEntity happyEightEntity = happyEightMapper.selectOne(new QueryWrapper<HappyEightEntity>().eq("lottery_date", lotteryDate));
+        if (null == happyEightEntity) {
             //若为空表示新增
             happyEightEntity.setLotteryDate(lotteryDate);
             happyEightEntity.setId(UuidUtils.generateUuid());
@@ -143,7 +171,7 @@ public class HappyEightServiceImpl implements HappyEightService {
         }
 
         //将HashMap的Value转化成List
-        Collection<HappyEightNumberFrequencyVo> valueCollection=winNumTimeMap.values();
+        Collection<HappyEightNumberFrequencyVo> valueCollection = winNumTimeMap.values();
         List<HappyEightNumberFrequencyVo> happyEightNumberFrequencyVo = new ArrayList<>(valueCollection);
 
         return new ResultVo<List<HappyEightNumberFrequencyVo>>().sucess(happyEightNumberFrequencyVo);
