@@ -18,7 +18,10 @@ import com.crystal.feature.service.HappyEightService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
+import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -52,7 +55,7 @@ public class HappyEightServiceImpl implements HappyEightService {
         for (HappyEightEntity entity : happyEightEntityList) {
 
             HappyEightQueryVo queryVo = new HappyEightQueryVo().fillAttribute(entity.getNumber());
-            happyEightQueryMap.put(entity.getLotteryDate(), queryVo);
+            happyEightQueryMap.put(entity.getBatchNumber(), queryVo);
 
         }
         Page<Map<String, HappyEightQueryVo>> pageVo = new Page<>();
@@ -63,16 +66,18 @@ public class HappyEightServiceImpl implements HappyEightService {
     }
 
     @Override
-    public ResultVo<String> save(HappyEightInsertDto dto) {
+    public ResultVo<String> save(@Valid HappyEightInsertDto dto) {
 
         //先查询一下当前的数据库中是否有对应的记录如果有则表示修改
-        String lotteryDate = dto.getLotteryDate();
-
-        HappyEightEntity happyEightEntity = happyEightMapper.selectOne(new QueryWrapper<HappyEightEntity>().eq("lottery_date", lotteryDate));
+        Date lotteryDate = dto.getLotteryDate();
+        String batchNumber =dto.getBatchNumber();
+        HappyEightEntity happyEightEntity = happyEightMapper.selectOne(new QueryWrapper<HappyEightEntity>().eq("batch_number", batchNumber));
         if (null == happyEightEntity) {
+            happyEightEntity = new HappyEightEntity();
             //若为空表示新增
             happyEightEntity.setLotteryDate(lotteryDate);
             happyEightEntity.setId(UuidUtils.generateUuid());
+            happyEightEntity.setBatchNumber(dto.getBatchNumber());
             happyEightEntity.setNumber(dto.toString());
             happyEightMapper.insert(happyEightEntity);
             return new ResultVo<String>().sucess(CommonMessageConstant.SAVE_SUCCESS);
@@ -87,7 +92,7 @@ public class HappyEightServiceImpl implements HappyEightService {
     public ResultVo<HappyEightNumberNoAppearsVo> queryNumberNoAppearsListByStage(int stage) {
         ResultVo<HappyEightNumberNoAppearsVo> vo = new ResultVo<>();
         //倒序查询出当前几期的中奖号码
-        QueryWrapper<HappyEightEntity> queryWrapper = new QueryWrapper<HappyEightEntity>().orderByDesc("stage").last("limit " + stage);
+        QueryWrapper<HappyEightEntity> queryWrapper = new QueryWrapper<HappyEightEntity>().orderByDesc("batch_number").last("limit " + stage);
         List<HappyEightEntity> happyEightEntityList = happyEightMapper.selectList(queryWrapper);
         List<String> numberList = new ArrayList<>();
         //给号码集合做一个初始赋值
@@ -110,14 +115,18 @@ public class HappyEightServiceImpl implements HappyEightService {
 
         for (HappyEightEntity entity : happyEightEntityList) {
             //直接拼接所有的中将号码.
-            WinNumStrBuffer.append(entity.getNumber() + "-");
+            WinNumStrBuffer.append(entity.getNumber());
         }
 
         String WinNumStr = WinNumStrBuffer.toString();
+        //记录变量
+        String str="";
         //进行数据比对筛选出中奖的号码
         for (int j = 0; j < numberList.size(); j++) {
+            str=numberList.get(j);
+            System.out.println("j:"+j+" str:"+str);
             //若中将号码存在则从初始化集合中移除
-            if (WinNumStr.contains(j + "")) {
+            if (WinNumStr.contains(str)) {
                 numberList.remove(j);
                 j--;
             }
@@ -129,7 +138,7 @@ public class HappyEightServiceImpl implements HappyEightService {
     @Override
     public ResultVo<List<HappyEightNumberFrequencyVo>> queryNumberFrequency(String time) {
 
-        QueryWrapper<HappyEightEntity> queryWrapper = new QueryWrapper<HappyEightEntity>().orderByDesc("stage");
+        QueryWrapper<HappyEightEntity> queryWrapper = new QueryWrapper<HappyEightEntity>().orderByDesc("batch_number");
 
         //判断参数合法性,若time不为空表示具体想查看固定的场次概率
         if (null != time) {
@@ -160,11 +169,11 @@ public class HappyEightServiceImpl implements HappyEightService {
                     winNumTimeMap.replace(str, temporary);
                     continue;
                 }
-                winNumTimeMap.put(str, new HappyEightNumberFrequencyVo(str));
+                winNumTimeMap.put(str, new HappyEightNumberFrequencyVo(str,1));
             }
 
             //判断第4 8 12 16次的时候计算
-            if (i == 4 || i == 8 || i == 12 || i == 16 || i == happyEightEntityList.size()) {
+            if (i == 4 || i == 8 || i == 12 || i == 16 || i == happyEightEntityList.size()-1) {
                 winNumTimeMap = this.WinNumProcess(winNumTimeMap, String.valueOf(i));
             }
 
@@ -182,8 +191,8 @@ public class HappyEightServiceImpl implements HappyEightService {
      * 对传入的集合进行数据处理,
      */
     public Map<String, HappyEightNumberFrequencyVo> WinNumProcess(Map<String, HappyEightNumberFrequencyVo> winNumTimeMap, String time) {
-
-
+        //格式化小数
+        DecimalFormat df = new DecimalFormat("0.00");
         for (String s : winNumTimeMap.keySet()) {
             //获取总次数
             Integer totalTime = winNumTimeMap.get(s).getTotalTime();
@@ -192,22 +201,22 @@ public class HappyEightServiceImpl implements HappyEightService {
             if (time.equals(CommonCodeConstant.LAST_FOUR)) {
                 winNumTimeMap.get(s).setLastFour(totalTime);
                 //最近四场次的概率
-                winNumTimeMap.get(s).setLastFourFrequency((totalTime / Integer.valueOf(CommonCodeConstant.LAST_FOUR)) * 100 + "%");
+                winNumTimeMap.get(s).setLastFourFrequency(df.format((float)totalTime / Integer.valueOf(CommonCodeConstant.LAST_FOUR)*100)+"%");
             } else if (time.equals(CommonCodeConstant.LAST_EIGHT)) {
                 //最近8场次的概率
                 winNumTimeMap.get(s).setLastEight(totalTime);
-                winNumTimeMap.get(s).setLastEightFrequency((totalTime / Integer.valueOf(CommonCodeConstant.LAST_EIGHT)) * 100 + "%");
+                winNumTimeMap.get(s).setLastEightFrequency(df.format((float)totalTime / Integer.valueOf(CommonCodeConstant.LAST_EIGHT)*100)+"%");
             } else if (time.equals(CommonCodeConstant.LAST_TWELVE)) {
                 //最近12场次的概率
                 winNumTimeMap.get(s).setLastTwelve(totalTime);
-                winNumTimeMap.get(s).setLastTwelveFrequency((totalTime / Integer.valueOf(CommonCodeConstant.LAST_TWELVE)) * 100 + "%");
+                winNumTimeMap.get(s).setLastTwelveFrequency(df.format((float)totalTime / Integer.valueOf(CommonCodeConstant.LAST_TWELVE)*100)+"%");
             } else if (time.equals(CommonCodeConstant.LAST_SIXTEEN)) {
                 //最近16场次的概率
                 winNumTimeMap.get(s).setLastSixteen(totalTime);
-                winNumTimeMap.get(s).setLastSixteenFrequency((totalTime / Integer.valueOf(CommonCodeConstant.LAST_SIXTEEN)) * 100 + "%");
+                winNumTimeMap.get(s).setLastSixteenFrequency(df.format((float)totalTime / Integer.valueOf(CommonCodeConstant.LAST_SIXTEEN)*100)+"%");
             } else {
                 //所有场次的概率
-                winNumTimeMap.get(s).setLastSixteenFrequency((totalTime / Integer.valueOf(time)) * 100 + "%");
+                winNumTimeMap.get(s).setLastSixteenFrequency(df.format((float)totalTime / Integer.valueOf(time)*100)+"%");
             }
         }
         return winNumTimeMap;

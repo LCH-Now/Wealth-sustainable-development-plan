@@ -14,7 +14,8 @@ public interface RegisterService {
 
     /**
      * 用户注册
-     * @param dto
+     * @param dto 注册用户信息
+     * @param request
      * @return 注册生成的token
      * @throws Exception
      */

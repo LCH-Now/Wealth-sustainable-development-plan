@@ -3,6 +3,8 @@ package com.crystal.feature.model.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author CHUNHAO LIU
  * 双色球实体类
@@ -14,7 +16,9 @@ public class HappyEightEntity {
 
     private String id;
 
-    private String lotteryDate;
+    private Date lotteryDate;
+
+    private String batchNumber;
 
     private String number;
 }

@@ -1,4 +1,4 @@
-package com.crystal.feature.common.util;
+package com.crystal.feature.common.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

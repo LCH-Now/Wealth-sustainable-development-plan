@@ -21,6 +21,15 @@ public class HappyEightNumberNoAppearsVo {
      */
     List<String> numberList;
 
-    public HappyEightNumberNoAppearsVo(int stage, List<String> numberList) {
+
+    public HappyEightNumberNoAppearsVo() {
     }
+
+
+    public  HappyEightNumberNoAppearsVo(int stage, List<String> numberList) {
+        this.stage = stage;
+        this.numberList = numberList;
+    }
+
+
 }

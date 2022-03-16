@@ -12,6 +12,7 @@ import com.crystal.feature.service.HappyEightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +43,7 @@ public class HappyEightController {
             vo = happyEightService.query(dto);
         } catch (Exception e) {
             e.printStackTrace();
-            vo.fail();
+            return vo.fail();
         }
 
         return vo;
@@ -56,14 +57,14 @@ public class HappyEightController {
      * @return
      */
     @RequestMapping(value = "save", method = RequestMethod.POST)
-    public ResultVo<String> save(@RequestBody HappyEightInsertDto dto) {
+    public ResultVo<String> save(@Valid @RequestBody HappyEightInsertDto dto) {
 
         ResultVo<String> vo = new ResultVo<>();
         try {
             vo = happyEightService.save(dto);
         } catch (Exception e) {
             e.printStackTrace();
-            vo.fail();
+            return vo.fail();
         }
 
         return vo;
@@ -83,7 +84,7 @@ public class HappyEightController {
             vo = happyEightService.queryNumberFrequency(time);
         } catch (Exception e) {
             e.printStackTrace();
-            vo.fail();
+            return vo.fail();
         }
 
         return vo;
@@ -104,10 +105,12 @@ public class HappyEightController {
             vo = happyEightService.queryNumberNoAppearsListByStage(stage);
         } catch (Exception e) {
             e.printStackTrace();
-            vo.fail();
+            return vo.fail();
         }
 
         return vo;
     }
+
+
 
 }
