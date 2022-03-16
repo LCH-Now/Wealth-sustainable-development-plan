@@ -21,6 +21,12 @@ public interface CommonMessageConstant {
     String USER_ALREADY_EXIST = "该用户已存在";
     String REQUIRED_ITEMS_ARE_NOT_FILLED_IN = "必填项未填写";
 
+
+    String BATCH_NUMBER_IS_NULL = "请输入彩票期号";
+    String PLAY_TYPE_IS_NULL = "请选择彩票玩法";
+    String QUANTITY_IS_NULL = "请输入购买数量";
+    String NUMBER_IS_NULL = "请输入选择的号码";
+
     /**
      * 成功信息提示
      */
