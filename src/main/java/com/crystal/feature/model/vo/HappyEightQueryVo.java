@@ -126,7 +126,7 @@ public class HappyEightQueryVo {
         this.ten = strArr[9];
         this.eleven = strArr[10];
         this.twelve = strArr[11];
-        this.three = strArr[12];
+        this.thirteen = strArr[12];
         this.fourteen = strArr[13];
         this.fifteen = strArr[14];
         this.sixteen = strArr[15];

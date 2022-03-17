@@ -3,7 +3,6 @@ package com.crystal.feature.model.dto;
 import com.crystal.feature.common.constant.CommonMessageConstant;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -12,6 +11,11 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class HappyEightBuyDetailDto {
+
+    /**
+     * 快乐8购买主键ID
+     */
+    private String id;
 
     /**
      * 彩票期号
@@ -35,6 +39,6 @@ public class HappyEightBuyDetailDto {
      * 选择号码
      */
     @NotNull(message = CommonMessageConstant.NUMBER_IS_NULL)
-    private String[] number;
+    private String[] numberArr;
 
 }

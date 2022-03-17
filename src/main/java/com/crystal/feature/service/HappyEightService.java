@@ -1,12 +1,11 @@
 package com.crystal.feature.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.crystal.feature.model.dto.HappyEightBuyDetailDto;
 import com.crystal.feature.model.dto.HappyEightInsertDto;
 import com.crystal.feature.model.dto.PageDto;
-import com.crystal.feature.model.vo.HappyEightNumberFrequencyVo;
-import com.crystal.feature.model.vo.HappyEightNumberNoAppearsVo;
-import com.crystal.feature.model.vo.HappyEightQueryVo;
-import com.crystal.feature.model.vo.ResultVo;
+import com.crystal.feature.model.entity.HappyEightBuyDetailEntity;
+import com.crystal.feature.model.vo.*;
 
 import java.util.List;
 import java.util.Map;
@@ -49,5 +48,29 @@ public interface HappyEightService {
      * @return
      */
     ResultVo<List<HappyEightNumberFrequencyVo>> queryNumberFrequency(String time);
+
+
+    /**
+     * 保存彩票购买信息
+     *
+     * @param dto 彩票购买信息
+     * @return
+     */
+    ResultVo<String> saveBuyDetail(HappyEightBuyDetailDto dto);
+
+
+    /**
+     * 查询快乐8彩票列表展示数据
+     * @param dto 分页信息
+     * @return
+     */
+    ResultVo<IPage<HappyEightBuyDetailEntity>> queryBuyDetailList(PageDto dto);
+
+    /**
+     * 查询快乐8彩票列表展示数据
+     * @param id 彩票购买详情编号
+     * @return
+     */
+    ResultVo<HappyEightBuyDetailEntity> queryLotteryInfo(String id);
 
 }
