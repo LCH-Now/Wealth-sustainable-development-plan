@@ -11,91 +11,11 @@
  Target Server Version : 50737
  File Encoding         : 65001
 
- Date: 16/03/2022 17:07:50
+ Date: 18/03/2022 17:19:15
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
--- ----------------------------
--- Table structure for t_b_happy_eight_details_list
--- ----------------------------
-DROP TABLE IF EXISTS `t_b_happy_eight_details_list`;
-CREATE TABLE `t_b_happy_eight_details_list`  (
-  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `batch_number` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '彩票期号',
-  `play_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '玩法：选一，选二，选三等',
-  `number` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '中奖号码',
-  `quantity` int(3) NULL DEFAULT NULL COMMENT '数量',
-  `purchase_amount` float(5, 2) NULL DEFAULT NULL COMMENT '购买金额',
-  `winning_amount` float(5, 2) NULL DEFAULT NULL COMMENT '中奖金额',
-  `net_profit` float(5, 2) NULL DEFAULT NULL COMMENT '净利润',
-  `update` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of t_b_happy_eight_details_list
--- ----------------------------
-
--- ----------------------------
--- Table structure for t_b_happy_eight_rule
--- ----------------------------
-DROP TABLE IF EXISTS `t_b_happy_eight_rule`;
-CREATE TABLE `t_b_happy_eight_rule`  (
-  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `play_type` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '玩法类型选一，选二，选三等。',
-  `number_of_winners` int(11) NULL DEFAULT NULL COMMENT '中奖号码个数',
-  `cost` float(10, 2) NULL DEFAULT NULL COMMENT '成本',
-  `bonus` float(10, 2) NULL DEFAULT NULL COMMENT '奖金',
-  `net_profit` float(10, 2) NULL DEFAULT NULL COMMENT '纯利润',
-  `bonus_ratio` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '奖金比值',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of t_b_happy_eight_rule
--- ----------------------------
-INSERT INTO `t_b_happy_eight_rule` VALUES ('57fe935e-a505-11ec-8bb4-2d1c05c4caa5', '10', 6, 2.00, 5.00, 3.00, '2.5', '2022-03-16 16:44:51');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('5814e309-a505-11ec-8bb4-2d1c05c4caa5', '10', 5, 2.00, 3.00, 0.00, '1.5', '2022-03-16 16:44:51');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('582e4cb6-a505-11ec-8bb4-2d1c05c4caa5', '10', 0, 2.00, 2.00, 0.00, '1', '2022-03-16 16:44:51');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('5843294d-a505-11ec-8bb4-2d1c05c4caa5', '09', 0, 2.00, 2.00, 0.00, '1', '2022-03-16 16:44:51');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('585cb76f-a505-11ec-8bb4-2d1c05c4caa5', '08', 0, 2.00, 2.00, 0.00, '1', '2022-03-16 16:44:51');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('5875015d-a505-11ec-8bb4-2d1c05c4caa5', '07', 0, 2.00, 2.00, 0.00, '1', '2022-03-16 16:44:51');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd34289-a503-11ec-8bb4-2d1c05c4caa5', '01', 1, 2.00, 4.60, 2.60, '2.3', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd3681c-a503-11ec-8bb4-2d1c05c4caa5', '02', 2, 2.00, 19.00, 17.00, '9.5', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd38c38-a503-11ec-8bb4-2d1c05c4caa5', '03', 3, 2.00, 53.00, 51.00, '26.5', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd3e4f3-a503-11ec-8bb4-2d1c05c4caa5', '03', 2, 2.00, 3.00, 1.00, '1.5', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd47ef3-a503-11ec-8bb4-2d1c05c4caa5', '04', 4, 2.00, 100.00, 98.00, '50', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd52f22-a503-11ec-8bb4-2d1c05c4caa5', '04', 3, 2.00, 5.00, 3.00, '2.5', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd5d940-a503-11ec-8bb4-2d1c05c4caa5', '04', 2, 2.00, 3.00, 1.00, '1.5', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd6aa39-a503-11ec-8bb4-2d1c05c4caa5', '05', 5, 2.00, 1000.00, 998.00, '500', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd78a77-a503-11ec-8bb4-2d1c05c4caa5', '05', 4, 2.00, 21.00, 19.00, '10.5', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd8259a-a503-11ec-8bb4-2d1c05c4caa5', '05', 3, 2.00, 3.00, 1.00, '1.5', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd8629f-a503-11ec-8bb4-2d1c05c4caa5', '06', 6, 2.00, 3000.00, 2998.00, '1500', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd885f2-a503-11ec-8bb4-2d1c05c4caa5', '06', 5, 2.00, 30.00, 28.00, '15', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd8a615-a503-11ec-8bb4-2d1c05c4caa5', '06', 4, 2.00, 10.00, 8.00, '5', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd8c6f9-a503-11ec-8bb4-2d1c05c4caa5', '06', 3, 2.00, 3.00, 1.00, '1.5', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd8e952-a503-11ec-8bb4-2d1c05c4caa5', '07', 7, 2.00, 10000.00, 99998.00, '50000', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd90b5d-a503-11ec-8bb4-2d1c05c4caa5', '07', 6, 2.00, 288.00, 286.00, '144', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd92d56-a503-11ec-8bb4-2d1c05c4caa5', '07', 5, 2.00, 24.00, 22.00, '12', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd94cc2-a503-11ec-8bb4-2d1c05c4caa5', '07', 4, 2.00, 4.00, 2.00, '2', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd97008-a503-11ec-8bb4-2d1c05c4caa5', '08', 8, 2.00, 50000.00, 49998.00, '25000', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd9945d-a503-11ec-8bb4-2d1c05c4caa5', '08', 7, 2.00, 800.00, 788.00, '400', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd9b1f9-a503-11ec-8bb4-2d1c05c4caa5', '08', 6, 2.00, 88.00, 86.00, '44', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd9dbd8-a503-11ec-8bb4-2d1c05c4caa5', '08', 5, 2.00, 10.00, 8.00, '5', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfd9fded-a503-11ec-8bb4-2d1c05c4caa5', '08', 4, 2.00, 3.00, 1.00, '4.5', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfda220b-a503-11ec-8bb4-2d1c05c4caa5', '09', 9, 2.00, 300000.00, 299998.00, '150000', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfda45f5-a503-11ec-8bb4-2d1c05c4caa5', '09', 8, 2.00, 2000.00, 1998.00, '1000', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfda67ba-a503-11ec-8bb4-2d1c05c4caa5', '09', 7, 2.00, 200.00, 198.00, '100', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfda8a02-a503-11ec-8bb4-2d1c05c4caa5', '09', 6, 2.00, 20.00, 18.00, '10', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfdab1fd-a503-11ec-8bb4-2d1c05c4caa5', '09', 5, 2.00, 5.00, 3.00, '2.5', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('cfdad3be-a503-11ec-8bb4-2d1c05c4caa5', '09', 4, 2.00, 3.00, 1.00, '1.5', '2022-03-16 16:33:53');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('dc49f192-a503-11ec-8bb4-2d1c05c4caa5', '10', 10, 2.00, 5000000.00, 4999998.00, '2500000', '2022-03-16 16:34:14');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('dc4a599b-a503-11ec-8bb4-2d1c05c4caa5', '10', 9, 2.00, 8000.00, 7998.00, '4000', '2022-03-16 16:34:14');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('dc4a7d64-a503-11ec-8bb4-2d1c05c4caa5', '10', 8, 2.00, 80.00, 78.00, '40', '2022-03-16 16:34:14');
-INSERT INTO `t_b_happy_eight_rule` VALUES ('e4d204c0-a503-11ec-8bb4-2d1c05c4caa5', '10', 7, 2.00, 5.00, 3.00, '2.5', '2022-03-16 16:34:28');
 
 -- ----------------------------
 -- Table structure for t_happy_eight
@@ -591,7 +511,97 @@ INSERT INTO `t_happy_eight` VALUES ('0b7bc4c3-a431-11ec-8bb4-2d1c05c4caa5', '202
 INSERT INTO `t_happy_eight` VALUES ('0b7becf8-a431-11ec-8bb4-2d1c05c4caa5', '2022-03-12', '2022061', '02,10,13,14,20,28,30,32,36,37,38,41,46,52,58,62,69,74,77,80,');
 INSERT INTO `t_happy_eight` VALUES ('0b7c16f8-a431-11ec-8bb4-2d1c05c4caa5', '2022-03-13', '2022062', '02,12,15,20,21,24,25,26,27,30,39,42,50,53,64,67,71,73,74,77,');
 INSERT INTO `t_happy_eight` VALUES ('0b7c40dd-a431-11ec-8bb4-2d1c05c4caa5', '2022-03-14', '2022063', '09,10,17,20,21,24,25,34,35,41,42,45,50,51,53,59,64,67,73,80,');
+INSERT INTO `t_happy_eight` VALUES ('5cec97ce-a33c-4d0a-8419-f98679423bce', '2022-03-17', '2022066', '08,11,21,23,25,26,29,30,34,38,39,41,47,48,50,52,55,57,62,69,');
+INSERT INTO `t_happy_eight` VALUES ('9c77b425-0f0b-439d-b685-a6113d74aad9', '2022-03-16', '2022065', '02,04,11,12,13,17,20,26,28,35,37,48,53,58,59,61,69,71,72,79,');
 INSERT INTO `t_happy_eight` VALUES ('d987a0c9-83c3-4c3d-9a13-35acff3f16b0', '2022-03-15', '2022064', '01,05,07,16,18,20,21,31,34,36,46,49,51,54,60,64,66,69,73,75,');
+
+-- ----------------------------
+-- Table structure for t_lottery_buy_details_list
+-- ----------------------------
+DROP TABLE IF EXISTS `t_lottery_buy_details_list`;
+CREATE TABLE `t_lottery_buy_details_list`  (
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `lottery_type` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '彩票类型',
+  `batch_number` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '彩票期号',
+  `play_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '玩法：选一，选二，选三等',
+  `number` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '彩票号码',
+  `quantity` int(3) NULL DEFAULT NULL COMMENT '数量',
+  `price` float(10, 2) NULL DEFAULT NULL COMMENT '单价',
+  `purchase_amount` float(5, 2) NULL DEFAULT NULL COMMENT '购买金额',
+  `bonus` float(5, 2) NULL DEFAULT NULL COMMENT '中奖金额',
+  `net_profit` float(5, 2) NULL DEFAULT NULL COMMENT '净利润',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  `open` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '00' COMMENT '标记是否已经开过奖了00-未开奖 01已开奖',
+  `winning_number` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '中奖号码',
+  `is_winning` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否中奖00未中奖 01中奖',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_lottery_buy_details_list
+-- ----------------------------
+INSERT INTO `t_lottery_buy_details_list` VALUES ('7333caa0-bb2d-4a7b-b996-2b7a3a3a060b', '00', '2022066', '01', '22,', 25, 2.00, 50.00, 50.00, -50.00, '2022-03-18 11:42:46', '01', NULL, '00');
+INSERT INTO `t_lottery_buy_details_list` VALUES ('9645ccce-ccdb-467d-82d0-e5fcbdcb8103', '00', '2022066', '02', '22,78,', 1, 2.00, 2.00, 0.00, -2.00, '2022-03-18 11:43:25', '01', NULL, '00');
+
+-- ----------------------------
+-- Table structure for t_lottery_rules
+-- ----------------------------
+DROP TABLE IF EXISTS `t_lottery_rules`;
+CREATE TABLE `t_lottery_rules`  (
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `lottery_type` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '彩票类型',
+  `play_type` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '玩法类型选一，选二，选三等。',
+  `number_of_winners` int(11) NULL DEFAULT NULL COMMENT '中奖号码个数',
+  `price` float(10, 2) NULL DEFAULT NULL COMMENT '单价',
+  `bonus` float(10, 2) NULL DEFAULT NULL COMMENT '奖金',
+  `net_profit` float(10, 2) NULL DEFAULT NULL COMMENT '纯利润',
+  `bonus_ratio` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '奖金比值',
+  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of t_lottery_rules
+-- ----------------------------
+INSERT INTO `t_lottery_rules` VALUES ('57fe935e-a505-11ec-8bb4-2d1c05c4caa5', '00', '10', 6, 2.00, 5.00, 3.00, '2.5', '2022-03-16 16:44:51');
+INSERT INTO `t_lottery_rules` VALUES ('5814e309-a505-11ec-8bb4-2d1c05c4caa5', '00', '10', 5, 2.00, 3.00, 0.00, '1.5', '2022-03-16 16:44:51');
+INSERT INTO `t_lottery_rules` VALUES ('582e4cb6-a505-11ec-8bb4-2d1c05c4caa5', '00', '10', 0, 2.00, 2.00, 0.00, '1', '2022-03-16 16:44:51');
+INSERT INTO `t_lottery_rules` VALUES ('5843294d-a505-11ec-8bb4-2d1c05c4caa5', '00', '09', 0, 2.00, 2.00, 0.00, '1', '2022-03-16 16:44:51');
+INSERT INTO `t_lottery_rules` VALUES ('585cb76f-a505-11ec-8bb4-2d1c05c4caa5', '00', '08', 0, 2.00, 2.00, 0.00, '1', '2022-03-16 16:44:51');
+INSERT INTO `t_lottery_rules` VALUES ('5875015d-a505-11ec-8bb4-2d1c05c4caa5', '00', '07', 0, 2.00, 2.00, 0.00, '1', '2022-03-16 16:44:51');
+INSERT INTO `t_lottery_rules` VALUES ('cfd34289-a503-11ec-8bb4-2d1c05c4caa5', '00', '01', 1, 2.00, 4.60, 2.60, '2.3', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd3681c-a503-11ec-8bb4-2d1c05c4caa5', '00', '02', 2, 2.00, 19.00, 17.00, '9.5', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd38c38-a503-11ec-8bb4-2d1c05c4caa5', '00', '03', 3, 2.00, 53.00, 51.00, '26.5', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd3e4f3-a503-11ec-8bb4-2d1c05c4caa5', '00', '03', 2, 2.00, 3.00, 1.00, '1.5', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd47ef3-a503-11ec-8bb4-2d1c05c4caa5', '00', '04', 4, 2.00, 100.00, 98.00, '50', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd52f22-a503-11ec-8bb4-2d1c05c4caa5', '00', '04', 3, 2.00, 5.00, 3.00, '2.5', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd5d940-a503-11ec-8bb4-2d1c05c4caa5', '00', '04', 2, 2.00, 3.00, 1.00, '1.5', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd6aa39-a503-11ec-8bb4-2d1c05c4caa5', '00', '05', 5, 2.00, 1000.00, 998.00, '500', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd78a77-a503-11ec-8bb4-2d1c05c4caa5', '00', '05', 4, 2.00, 21.00, 19.00, '10.5', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd8259a-a503-11ec-8bb4-2d1c05c4caa5', '00', '05', 3, 2.00, 3.00, 1.00, '1.5', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd8629f-a503-11ec-8bb4-2d1c05c4caa5', '00', '06', 6, 2.00, 3000.00, 2998.00, '1500', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd885f2-a503-11ec-8bb4-2d1c05c4caa5', '00', '06', 5, 2.00, 30.00, 28.00, '15', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd8a615-a503-11ec-8bb4-2d1c05c4caa5', '00', '06', 4, 2.00, 10.00, 8.00, '5', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd8c6f9-a503-11ec-8bb4-2d1c05c4caa5', '00', '06', 3, 2.00, 3.00, 1.00, '1.5', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd8e952-a503-11ec-8bb4-2d1c05c4caa5', '00', '07', 7, 2.00, 10000.00, 99998.00, '50000', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd90b5d-a503-11ec-8bb4-2d1c05c4caa5', '00', '07', 6, 2.00, 288.00, 286.00, '144', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd92d56-a503-11ec-8bb4-2d1c05c4caa5', '00', '07', 5, 2.00, 24.00, 22.00, '12', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd94cc2-a503-11ec-8bb4-2d1c05c4caa5', '00', '07', 4, 2.00, 4.00, 2.00, '2', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd97008-a503-11ec-8bb4-2d1c05c4caa5', '00', '08', 8, 2.00, 50000.00, 49998.00, '25000', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd9945d-a503-11ec-8bb4-2d1c05c4caa5', '00', '08', 7, 2.00, 800.00, 788.00, '400', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd9b1f9-a503-11ec-8bb4-2d1c05c4caa5', '00', '08', 6, 2.00, 88.00, 86.00, '44', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd9dbd8-a503-11ec-8bb4-2d1c05c4caa5', '00', '08', 5, 2.00, 10.00, 8.00, '5', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfd9fded-a503-11ec-8bb4-2d1c05c4caa5', '00', '08', 4, 2.00, 3.00, 1.00, '4.5', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfda220b-a503-11ec-8bb4-2d1c05c4caa5', '00', '09', 9, 2.00, 300000.00, 299998.00, '150000', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfda45f5-a503-11ec-8bb4-2d1c05c4caa5', '00', '09', 8, 2.00, 2000.00, 1998.00, '1000', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfda67ba-a503-11ec-8bb4-2d1c05c4caa5', '00', '09', 7, 2.00, 200.00, 198.00, '100', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfda8a02-a503-11ec-8bb4-2d1c05c4caa5', '00', '09', 6, 2.00, 20.00, 18.00, '10', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfdab1fd-a503-11ec-8bb4-2d1c05c4caa5', '00', '09', 5, 2.00, 5.00, 3.00, '2.5', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('cfdad3be-a503-11ec-8bb4-2d1c05c4caa5', '00', '09', 4, 2.00, 3.00, 1.00, '1.5', '2022-03-16 16:33:53');
+INSERT INTO `t_lottery_rules` VALUES ('dc49f192-a503-11ec-8bb4-2d1c05c4caa5', '00', '10', 10, 2.00, 5000000.00, 4999998.00, '2500000', '2022-03-16 16:34:14');
+INSERT INTO `t_lottery_rules` VALUES ('dc4a599b-a503-11ec-8bb4-2d1c05c4caa5', '00', '10', 9, 2.00, 8000.00, 7998.00, '4000', '2022-03-16 16:34:14');
+INSERT INTO `t_lottery_rules` VALUES ('dc4a7d64-a503-11ec-8bb4-2d1c05c4caa5', '00', '10', 8, 2.00, 80.00, 78.00, '40', '2022-03-16 16:34:14');
+INSERT INTO `t_lottery_rules` VALUES ('e4d204c0-a503-11ec-8bb4-2d1c05c4caa5', '00', '10', 7, 2.00, 5.00, 3.00, '2.5', '2022-03-16 16:34:28');
 
 -- ----------------------------
 -- Table structure for t_user
