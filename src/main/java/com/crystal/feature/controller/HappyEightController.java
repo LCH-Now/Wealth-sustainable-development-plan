@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.crystal.feature.model.dto.HappyEightBuyDetailDto;
 import com.crystal.feature.model.dto.HappyEightInsertDto;
 import com.crystal.feature.model.dto.PageDto;
-import com.crystal.feature.model.entity.HappyEightBuyDetailEntity;
+import com.crystal.feature.model.entity.LotteryBuyDetailEntity;
 import com.crystal.feature.model.vo.*;
 import com.crystal.feature.service.HappyEightService;
 import org.apache.ibatis.annotations.Param;
@@ -56,11 +56,11 @@ public class HappyEightController {
      * @return
      */
     @RequestMapping(value = "saveWinNumber", method = RequestMethod.POST)
-    public ResultVo<String> save(@Valid @RequestBody HappyEightInsertDto dto) {
+    public ResultVo<String> saveWinNumber(@Valid @RequestBody HappyEightInsertDto dto) {
 
         ResultVo<String> vo = new ResultVo<>();
         try {
-            vo = happyEightService.save(dto);
+            vo = happyEightService.saveWinNumber(dto);
         } catch (Exception e) {
             e.printStackTrace();
             return vo.fail();
@@ -102,63 +102,6 @@ public class HappyEightController {
         ResultVo<HappyEightNumberNoAppearsVo> vo = new ResultVo<>();
         try {
             vo = happyEightService.queryNumberNoAppearsListByStage(stage);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return vo.fail();
-        }
-
-        return vo;
-    }
-
-    /**
-     * 记录彩票购买明细
-     *
-     * @param dto 彩票购买明细
-     * @return
-     */
-    @RequestMapping(value = "saveBuyDetail", method = RequestMethod.POST)
-    public ResultVo<String> saveBuyDetail(@Valid @RequestBody HappyEightBuyDetailDto dto) {
-
-        ResultVo<String> vo = new ResultVo<>();
-        try {
-            vo = happyEightService.saveBuyDetail(dto);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return vo.fail();
-        }
-
-        return vo;
-    }
-
-
-    /**
-     * 查询彩票购买记录明细列表
-     *
-     * @return
-     */
-    @RequestMapping(value = "queryBuyDetailList", method = RequestMethod.POST)
-    public ResultVo<IPage<HappyEightBuyDetailEntity>> queryBuyDetailList(@RequestBody PageDto dto) {
-
-        ResultVo<IPage<HappyEightBuyDetailEntity>> vo = new ResultVo<>();
-        try {
-            vo = happyEightService.queryBuyDetailList(dto);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return vo.fail();
-        }
-
-        return vo;
-    }
-
-    /**
-     * 查询是否中奖如果是则返回中奖信息对象,如果没中奖则返回信息提示还没有开奖。
-     */
-    @RequestMapping(value = "queryLotteryInfo", method = RequestMethod.GET)
-    public ResultVo<HappyEightBuyDetailEntity> queryLotteryInfo(@Param("id") String id) {
-
-        ResultVo<HappyEightBuyDetailEntity> vo = new ResultVo<>();
-        try {
-            vo = happyEightService.queryLotteryInfo(id);
         } catch (Exception e) {
             e.printStackTrace();
             return vo.fail();

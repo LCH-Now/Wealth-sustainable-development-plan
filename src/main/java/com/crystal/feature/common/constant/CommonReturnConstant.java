@@ -17,8 +17,12 @@ public interface CommonReturnConstant {
     String FAIL_CODE="0";
     String FAIL_MSG="执行失败";
 
+
+
     /**
-     * 表示*****
+     * 表示成功但是查无数据
      */
+    String SUCCESS_BUT_NOT_DATA_CODE="2";
+    String SUCCESS_BUT_NOT_DATA_MSG="执行成功,查无数据";
 
 }

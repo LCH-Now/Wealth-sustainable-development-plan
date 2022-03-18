@@ -1,4 +1,4 @@
-package com.crystal.feature.config;
+package com.crystal.feature.common.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

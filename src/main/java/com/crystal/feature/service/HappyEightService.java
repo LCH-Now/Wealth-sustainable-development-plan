@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.crystal.feature.model.dto.HappyEightBuyDetailDto;
 import com.crystal.feature.model.dto.HappyEightInsertDto;
 import com.crystal.feature.model.dto.PageDto;
-import com.crystal.feature.model.entity.HappyEightBuyDetailEntity;
+import com.crystal.feature.model.entity.LotteryBuyDetailEntity;
 import com.crystal.feature.model.vo.*;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public interface HappyEightService {
      * @param dto 中奖日期以及号码
      * @return
      */
-    ResultVo<String> save(HappyEightInsertDto dto);
+    ResultVo<String> saveWinNumber(HappyEightInsertDto dto);
 
     /**
      * 查询倒序几期内没有出现过的号码
@@ -48,29 +48,5 @@ public interface HappyEightService {
      * @return
      */
     ResultVo<List<HappyEightNumberFrequencyVo>> queryNumberFrequency(String time);
-
-
-    /**
-     * 保存彩票购买信息
-     *
-     * @param dto 彩票购买信息
-     * @return
-     */
-    ResultVo<String> saveBuyDetail(HappyEightBuyDetailDto dto);
-
-
-    /**
-     * 查询快乐8彩票列表展示数据
-     * @param dto 分页信息
-     * @return
-     */
-    ResultVo<IPage<HappyEightBuyDetailEntity>> queryBuyDetailList(PageDto dto);
-
-    /**
-     * 查询快乐8彩票列表展示数据
-     * @param id 彩票购买详情编号
-     * @return
-     */
-    ResultVo<HappyEightBuyDetailEntity> queryLotteryInfo(String id);
 
 }

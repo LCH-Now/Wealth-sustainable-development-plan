@@ -6,15 +6,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.crystal.feature.common.constant.CommonCodeConstant;
 import com.crystal.feature.common.constant.CommonMessageConstant;
-import com.crystal.feature.mapper.HappyEightBuyDetailMapper;
 import com.crystal.feature.mapper.HappyEightMapper;
-import com.crystal.feature.mapper.LotteryRulesMapper;
-import com.crystal.feature.model.dto.HappyEightBuyDetailDto;
 import com.crystal.feature.model.dto.HappyEightInsertDto;
 import com.crystal.feature.model.dto.PageDto;
-import com.crystal.feature.model.entity.HappyEightBuyDetailEntity;
 import com.crystal.feature.model.entity.HappyEightEntity;
-import com.crystal.feature.model.entity.LotteryRulesEntity;
 import com.crystal.feature.model.vo.*;
 import com.crystal.feature.service.HappyEightService;
 import org.springframework.beans.BeanUtils;
@@ -34,12 +29,6 @@ public class HappyEightServiceImpl implements HappyEightService {
 
     @Autowired
     private HappyEightMapper happyEightMapper;
-
-    @Autowired
-    private HappyEightBuyDetailMapper happyEightBuyDetailMapper;
-
-    @Autowired
-    private LotteryRulesMapper lotteryRulesMapper;
 
     @Override
     public ResultVo<IPage<Map<String, HappyEightQueryVo>>> query(PageDto dto) {
@@ -73,7 +62,7 @@ public class HappyEightServiceImpl implements HappyEightService {
     }
 
     @Override
-    public ResultVo<String> save(@Valid HappyEightInsertDto dto) {
+    public ResultVo<String> saveWinNumber(@Valid HappyEightInsertDto dto) {
 
         //先查询一下当前的数据库中是否有对应的记录如果有则表示修改
         Date lotteryDate = dto.getLotteryDate();
@@ -131,7 +120,6 @@ public class HappyEightServiceImpl implements HappyEightService {
         //进行数据比对筛选出中奖的号码
         for (int j = 0; j < numberList.size(); j++) {
             str = numberList.get(j);
-            System.out.println("j:" + j + " str:" + str);
             //若中将号码存在则从初始化集合中移除
             if (winNumStr.contains(str)) {
                 numberList.remove(j);
@@ -194,76 +182,6 @@ public class HappyEightServiceImpl implements HappyEightService {
         return new ResultVo<List<HappyEightNumberFrequencyVo>>().sucess(happyEightNumberFrequencyVo);
     }
 
-    @Override
-    public ResultVo<String> saveBuyDetail(HappyEightBuyDetailDto dto) {
-
-        //获取彩票号码,拼接成字符串
-        String[] numberArr = dto.getNumberArr();
-        StringBuffer number = new StringBuffer();
-
-        for (int i = 0; i < numberArr.length; i++) {
-            number.append(numberArr[i] + ",");
-        }
-
-        HappyEightBuyDetailEntity happyEightBuyDetailEntity = new HappyEightBuyDetailEntity();
-        BeanUtils.copyProperties(dto, happyEightBuyDetailEntity);
-        //如果有传主键id,表示更新,没传表示新增。
-        String id = dto.getId();
-
-        if (null == id || id.equals(id)) {
-            id = UuidUtils.generateUuid();
-            happyEightBuyDetailEntity.setId(id);
-            //新增入库
-            happyEightBuyDetailMapper.insert(happyEightBuyDetailEntity);
-
-            return new ResultVo<String>().sucess(CommonMessageConstant.SAVE_SUCCESS);
-        }
-        //修改数据
-        happyEightBuyDetailMapper.updateById(happyEightBuyDetailEntity);
-
-        return new ResultVo<String>().sucess(CommonMessageConstant.SAVE_SUCCESS);
-    }
-
-    @Override
-    public ResultVo<IPage<HappyEightBuyDetailEntity>> queryBuyDetailList(PageDto dto) {
-        //查询数据库列表的购买数据信息
-        IPage<HappyEightBuyDetailEntity> happyEightQueryBuyDetailEntityList = happyEightBuyDetailMapper.selectPage(new Page<>(dto.getPage(), dto.getSize()), new QueryWrapper<HappyEightBuyDetailEntity>().orderByDesc("batch_number"));
-
-        return new ResultVo<IPage<HappyEightBuyDetailEntity>>().sucess(happyEightQueryBuyDetailEntityList);
-    }
-
-    @Override
-    public ResultVo<HappyEightBuyDetailEntity> queryLotteryInfo(String id) {
-
-        //依据购买编号查询出来详情
-        HappyEightBuyDetailEntity happyEightBuyDetailEntity = happyEightBuyDetailMapper.selectById(id);
-
-        String open = happyEightBuyDetailEntity.getOpen();
-        if (CommonCodeConstant.IS_OPEN_LOTTERY_TIME.equals(open)) {
-            //如果已经开奖则直接返回数据,
-            return new ResultVo<HappyEightBuyDetailEntity>().sucess(happyEightBuyDetailEntity);
-        }
-
-        //购买彩票号码
-        List<String> numberList = Arrays.asList(happyEightBuyDetailEntity.getNumber().split(","));
-
-        //获取当期的彩票数据
-        String batchNumber = happyEightBuyDetailEntity.getBatchNumber();
-        HappyEightEntity happyEightEntity = happyEightMapper.selectOne(new QueryWrapper<HappyEightEntity>().eq("batch_number", batchNumber));
-
-        //判断中奖号码的个数
-        for (int i = 0; i < numberList.size(); i++) {
-            if (!batchNumber.contains(numberList.get(i))) {
-                numberList.remove(i);
-                i--;
-            }
-        }
-
-        //依据玩法规则判断奖金以及中奖
-
-
-        return null;
-    }
 
 
     /**
@@ -300,60 +218,6 @@ public class HappyEightServiceImpl implements HappyEightService {
             }
         }
         return winNumTimeMap;
-    }
-
-
-    /**
-     * 依据规则查询中奖信息。
-     */
-    public HappyEightBuyDetailEntity checkLotteryInfo(HappyEightBuyDetailEntity happyEightBuyDetailEntity, List<String> numberList) {
-
-
-        //首先查询出游戏规则
-        String playType = happyEightBuyDetailEntity.getPlayType();
-        List<LotteryRulesEntity> rulesEntityList = lotteryRulesMapper.selectList(new QueryWrapper<LotteryRulesEntity>().eq("lottery_type", CommonCodeConstant.LOTTERY_TYPE_HAPPY_EIGHT).eq("play_type", playType));
-        Map<String, LotteryRulesEntity> rulesEntityMap = new HashMap<>();
-        for (int i = 0; i < rulesEntityList.size(); i++) {
-            LotteryRulesEntity lotteryRulesEntity = rulesEntityList.get(i);
-            //中奖个数
-            String numberOfWinner = lotteryRulesEntity.getNumberOfWinners();
-
-            rulesEntityMap.put(numberOfWinner, lotteryRulesEntity);
-        }
-
-        if (CommonCodeConstant.HAPPY_EIGHT_CHOOSE_ONE.equals(playType)) {
-            //选一玩法
-
-        } else if (CommonCodeConstant.HAPPY_EIGHT_CHOOSE_TWO.equals(playType)) {
-            //选二玩法
-
-        } else if (CommonCodeConstant.HAPPY_EIGHT_CHOOSE_THREE.equals(playType)) {
-            //选三玩法
-
-        } else if (CommonCodeConstant.HAPPY_EIGHT_CHOOSE_FOUR.equals(playType)) {
-            //选四玩法
-
-        } else if (CommonCodeConstant.HAPPY_EIGHT_CHOOSE_FIVE.equals(playType)) {
-            //选五玩法
-
-        } else if (CommonCodeConstant.HAPPY_EIGHT_CHOOSE_SIX.equals(playType)) {
-            //选六玩法
-
-        } else if (CommonCodeConstant.HAPPY_EIGHT_CHOOSE_SEVEN.equals(playType)) {
-            //选七玩法
-
-        } else if (CommonCodeConstant.HAPPY_EIGHT_CHOOSE_EIGHT.equals(playType)) {
-            //选八玩法
-
-        } else if (CommonCodeConstant.HAPPY_EIGHT_CHOOSE_NINE.equals(playType)) {
-            //选九玩法
-
-        } else if (CommonCodeConstant.HAPPY_EIGHT_CHOOSE_TEN.equals(playType)) {
-            //选十玩法
-
-        }
-
-        return happyEightBuyDetailEntity;
     }
 
 }

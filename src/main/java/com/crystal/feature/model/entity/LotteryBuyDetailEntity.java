@@ -11,13 +11,18 @@ import java.util.Date;
  * 彩票购买详情
  */
 @Data
-@TableName("t_happy_eight_detail_list")
-public class HappyEightBuyDetailEntity {
+@TableName("t_lottery_buy_details_list")
+public class LotteryBuyDetailEntity {
 
     /**
      * 主键id
      */
     private String id;
+
+    /**
+     * 彩票类型
+     */
+    private String lotteryType;
 
     /**
      * 彩票期号
@@ -40,14 +45,20 @@ public class HappyEightBuyDetailEntity {
     private Integer quantity;
 
     /**
-     * 购买金额
+     * 单价
      */
-    private Float purchaseAmount;
+    private Float price;
+
 
     /**
-     * 中奖金额
+     * 奖金
      */
-    private Float winningAmount;
+    private Float bonus;
+
+    /**
+     * 购买金额
+     */
+    private Float PurchaseAmount;
 
     /**
      * 净利润

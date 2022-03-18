@@ -3,6 +3,8 @@ package com.crystal.feature.model.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author CHUNHAO LIU
  * 快乐8彩票游戏规则
@@ -26,19 +28,19 @@ public class LotteryRulesEntity {
     /**
      * 中奖个数
      */
-    private String numberOfWinners;
+    private Integer numberOfWinners;
     /**
      * 成本
      */
-    private String cost;
+    private Float price;
     /**
      * 奖金
      */
-    private String bonus;
+    private Float bonus;
     /**
      * 纯利润
      */
-    private String netProfit;
+    private Float netProfit;
     /**
      * 奖金比值
      */
@@ -46,5 +48,5 @@ public class LotteryRulesEntity {
     /**
      * 更新时间
      */
-    private String updateTime;
+    private Date updateTime;
 }

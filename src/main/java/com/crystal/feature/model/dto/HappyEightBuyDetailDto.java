@@ -18,6 +18,12 @@ public class HappyEightBuyDetailDto {
     private String id;
 
     /**
+     *类型
+     */
+    @NotNull(message = CommonMessageConstant.LOTTERY_TYPE_IS_NULL)
+    private String lotteryType;
+
+    /**
      * 彩票期号
      */
     @NotNull(message = CommonMessageConstant.BATCH_NUMBER_IS_NULL)

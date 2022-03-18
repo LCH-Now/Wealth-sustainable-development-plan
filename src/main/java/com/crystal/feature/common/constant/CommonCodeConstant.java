@@ -39,4 +39,10 @@ public interface CommonCodeConstant {
      */
     String IS_NOT_OPEN_LOTTERY_TIME="00";
     String IS_OPEN_LOTTERY_TIME="01";
+
+    /**
+     * 是否中奖00-未中奖 01已中奖
+     */
+    String IS_NOT_WINNING="00";
+    String IS_WINNING="01";
 }
