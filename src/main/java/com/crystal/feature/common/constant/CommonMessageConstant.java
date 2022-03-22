@@ -1,7 +1,5 @@
 package com.crystal.feature.common.constant;
 
-import org.springframework.stereotype.Component;
-
 /**
  * @author CHUNHAO LIU
  * 提示信息类
@@ -25,6 +23,15 @@ public interface CommonMessageConstant {
     String PLAY_TYPE_IS_NULL = "请选择彩票玩法";
     String QUANTITY_IS_NULL = "请输入购买数量";
     String NUMBER_IS_NULL = "请输入选择的号码";
+
+    /**
+     * 系统菜单信息提示语
+     */
+    String MENU_NAME_IS_NULL = "请输入菜单名称";
+    String MENU_URL_IS_NULL = "请输入菜单地址";
+    String MENU_DESC_IS_NULL = "请输入菜单描述";
+    String ROLE_ID_IS_NULL = "请输入角色信息";
+
 
     /**
      * 查询为空信息异常

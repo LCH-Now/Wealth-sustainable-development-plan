@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @NacosPropertySource(dataId = "common-crystal.yaml", autoRefreshed = true)
 @MapperScan("com.crystal.feature.mapper")
-@ComponentScan(basePackages = {"com.crystal.feature.*"})
+@ComponentScan(basePackages = {"com.crystal.feature.*","com.skq.core.jwt.service"})
 public class MyCodeApplication {
 
     public static void main(String[] args) {

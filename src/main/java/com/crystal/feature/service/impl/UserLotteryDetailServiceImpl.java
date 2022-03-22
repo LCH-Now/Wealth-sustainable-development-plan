@@ -66,7 +66,7 @@ public class UserLotteryDetailServiceImpl implements UserLotteryDetailService {
         Float price = rulesEntityList.get(0).getPrice();
         //输入保存购买号码
         happyEightBuyDetailEntity.setNumber(number);
-        happyEightBuyDetailEntity.setBonus(quantity * price);
+        happyEightBuyDetailEntity.setPurchaseAmount(quantity * price);
         happyEightBuyDetailEntity.setPrice(price);
 
         //如果有传主键id,表示更新,没传表示新增。
@@ -182,7 +182,7 @@ public class UserLotteryDetailServiceImpl implements UserLotteryDetailService {
         //计算利润 中奖金额-成本
         Float netProfit = winningAmount - purchaseAmount;
 
-        happyEightBuyDetailEntity.setWinningAmount(winningAmount);
+        happyEightBuyDetailEntity.setBonus(winningAmount);
         happyEightBuyDetailEntity.setNetProfit(netProfit);
         happyEightBuyDetailEntity.setOpen(CommonCodeConstant.IS_OPEN_LOTTERY_TIME);
         happyEightBuyDetailEntity.setIsWinning(isWinning);
