@@ -1,6 +1,5 @@
 package com.crystal.feature.service.impl;
 
-import com.alibaba.nacos.common.utils.UuidUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -12,6 +11,7 @@ import com.crystal.feature.model.dto.PageDto;
 import com.crystal.feature.model.entity.HappyEightEntity;
 import com.crystal.feature.model.vo.*;
 import com.crystal.feature.service.HappyEightService;
+import com.skq.util.UuidUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,7 +72,7 @@ public class HappyEightServiceImpl implements HappyEightService {
             happyEightEntity = new HappyEightEntity();
             //若为空表示新增
             happyEightEntity.setLotteryDate(lotteryDate);
-            happyEightEntity.setId(UuidUtils.generateUuid());
+            happyEightEntity.setId(UuidUtil.getUuid());
             happyEightEntity.setBatchNumber(dto.getBatchNumber());
             happyEightEntity.setNumber(dto.toString());
             happyEightMapper.insert(happyEightEntity);

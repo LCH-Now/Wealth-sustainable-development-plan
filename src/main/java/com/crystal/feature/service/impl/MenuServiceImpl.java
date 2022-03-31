@@ -12,7 +12,6 @@ import com.crystal.feature.model.vo.MenuQueryVo;
 import com.crystal.feature.service.MenuService;
 import com.skq.base.vo.ResultVo;
 import com.skq.util.UuidUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -45,7 +44,7 @@ public class MenuServiceImpl implements MenuService {
         // 先找到所有的一级菜单
         for (int i = 0; i < rootMenu.size(); i++) {
             // 一级菜单没有parentId
-            if (StringUtils.isBlank(rootMenu.get(i).getPid())) {
+            if ("".equals(rootMenu.get(i).getPid())) {
                 menuList.add(rootMenu.get(i));
             }
         }
@@ -106,7 +105,7 @@ public class MenuServiceImpl implements MenuService {
         for (MenuQueryVo menu : rootMenu) {
             String pid = menu.getPid();
             // 遍历所有节点，将父菜单id与传过来的id比较
-            if (StringUtils.isNotBlank(pid)) {
+            if ("".equals(pid)) {
                 if (pid.equals(id)) {
                     childList.add(menu);
                 }
@@ -114,7 +113,7 @@ public class MenuServiceImpl implements MenuService {
         }
         // 把子菜单的子菜单再循环一遍,没有url子菜单还有子菜单
         for (MenuQueryVo menu : childList) {
-            if (StringUtils.isBlank(menu.getUrl())) {
+            if ("".equals(menu.getUrl())) {
                 // 递归
                 menu.setChildMenus(getChild(menu.getId(), rootMenu));
             }

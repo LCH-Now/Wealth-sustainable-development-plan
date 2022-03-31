@@ -3,9 +3,6 @@ package com.crystal.feature.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.crystal.feature.common.constant.CommonMessageConstant;
-import com.crystal.feature.common.util.IpUtil;
-import com.crystal.feature.common.util.Md5Util;
-import com.crystal.feature.common.util.RedisUtil;
 import com.crystal.feature.mapper.UserMapper;
 import com.crystal.feature.model.dto.UserRegisterDto;
 import com.crystal.feature.model.entity.UserEntity;

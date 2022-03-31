@@ -48,17 +48,6 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-        <!--nacos配置包，读取nacos上的配置文件需要-->
-        <dependency>
-            <groupId>com.alibaba.boot</groupId>
-            <artifactId>nacos-config-spring-boot-starter</artifactId>
-            <version>0.2.7</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.boot</groupId>
-            <artifactId>nacos-discovery-spring-boot-starter</artifactId>
-            <version>0.2.7</version>
-        </dependency>
         <!--数据库配置-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
@@ -118,6 +107,7 @@
             <artifactId>common</artifactId>
             <version>0.0.1</version>
         </dependency>
+
     </dependencies>
 
     <build>

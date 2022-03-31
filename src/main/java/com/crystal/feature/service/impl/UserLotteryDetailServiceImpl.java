@@ -1,6 +1,5 @@
 package com.crystal.feature.service.impl;
 
-import com.alibaba.nacos.common.utils.UuidUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -17,6 +16,7 @@ import com.crystal.feature.model.entity.LotteryBuyDetailEntity;
 import com.crystal.feature.model.entity.LotteryRulesEntity;
 import com.crystal.feature.model.vo.ResultVo;
 import com.crystal.feature.service.UserLotteryDetailService;
+import com.skq.util.UuidUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -73,7 +73,7 @@ public class UserLotteryDetailServiceImpl implements UserLotteryDetailService {
         String id = dto.getId();
 
         if (null == id || "".equals(id)) {
-            id = UuidUtils.generateUuid();
+            id = UuidUtil.getUuid();
             happyEightBuyDetailEntity.setId(id);
             //新增入库
             lotteryBuyDetailMapper.insert(happyEightBuyDetailEntity);
